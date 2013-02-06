@@ -21,7 +21,7 @@
  * bump_vote() removes their first pick
  */
 class Ballot {
-  vector<int> votes;
+	vector<int> votes;
 public:
 	int get_vote();
 	void bump_vote();
@@ -54,21 +54,6 @@ public:
 }
 
 // ------------
-// voting_read
-// ------------
-
-bool voting_read (std::istream& r, int& i, int& j) {
-    r >> i;
-    if (!r)
-        return false;
-	
-    r >> j;
-    assert(i > 0);
-    assert(j > 0);
-    return true;
-}
-
-// ------------
 // voting_eval
 // ------------
 
@@ -83,7 +68,9 @@ char *voting_eval (Voting_Scenario &vs) {
 // -------------
 
 void voting_print (std::ostream& w, String v) {
-    w << v << std::endl;}
+	//Change this to allow ties
+    w << v << std::endl;
+}
 
 // -------------
 // retrieve
