@@ -45,40 +45,35 @@ cleaned:
 	min_count.clear();
 	min_count.resize(num_c);
 countvotes:
-	//cout << "counting for " << endl << vs << endl;
 	for (vector<Ballot>::iterator it = vs.beginb(); it != vs.endb(); ++it) {
 			i = (*it).get_vote() - 1;
 			
-			//cout << "voting for " << (*it).get_vote() << endl;
 			tally.at(i).push_back(*it);
 			min_count.at(i)++;
 			if (tally.at(i).size() > vs.num_ballots()/2) 
 				return vs.get_candidate(i);
 	}
 	tie = 1;
-	//cout << "no one took first vote, breaking tie" << endl;
 	//**if i get out here, I gotta discard the lowest amount of votes.
 	loser = 0;
 	// find the candidate with the lowest number of votes
 	for (i = 1; i < num_c; i++) {
-		//cout << min_count.at(i) << " " << min_count.at(loser) << endl;
 		if (min_count.at(i) != min_count.at(loser)) {
 			tie = 0;
 			
 			if (min_count.at(i) < min_count.at(loser)) loser = i;
 		}
 	}
-	//cout << "eliminating loser : " << vs.get_candidate(loser) << endl;
-	//cout << (tie ? "There was a tie\n" : "No tie detected\n");
-	if (tie) return "tie!";
+	if (tie) {
+		string winners = "";
+		for (i = 0; i < num_c; i++) {
+			if (min_count.at(i)) winners += vs.get_candidate(i) + "\n";
+		}
+		return winners;
+	}
 	//if all candidates have same number of votes, return all names
 	recount_votes(vs, loser+1);
-	//return "damn.";
 	goto cleaned;
-	
-	
-	
-    //return winner;
 }
 
 // -------------
