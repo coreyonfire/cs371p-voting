@@ -38,6 +38,7 @@ public:
 		return votes.front();
 	}
 	void bump_vote() {
+		if (votes.size() == 1) return;
 		votes.erase(votes.begin());
 		return;
 	}
@@ -86,7 +87,7 @@ public:
 	void add_ballot(Ballot b) {
 		ballots.push_back(b);
 	}
-	
+	//camron was here
 	Ballot get_ballot(int n) {
 		return ballots.at(n);
 	}
