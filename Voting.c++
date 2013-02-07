@@ -34,6 +34,7 @@ string voting_eval (Voting_Scenario &vs) {
 			if (tally.at(i).size() > vs.num_ballots()/2) 
 				return vs.get_candidate(i);
 	}
+	//if i get out here, I gotta discard the lowest amount of votes.
 //tiecheck:
 	
 	
