@@ -20,11 +20,23 @@ using namespace std;
 
 
 void recount_votes(Voting_Scenario &vs, int loser) {
+	//cout << "looking to bump all " << loser << "s..." <<endl;
 	for (vector<Ballot>::iterator it = vs.beginb(); it != vs.endb(); ++it) {
-			if ((*it).get_vote() == loser)
+			if ((*it).get_vote() == loser) {
+				//cout << "bumping vote" << endl;
 				(*it).bump_vote();
+			}
 		}
 	
+}
+
+void display_tally(vector<int> m, int num_c) {
+	int i;
+	cout << "---------" << endl;
+	for (i = 0; i < num_c; i++) {
+		cout << "Candidate " << i << " got " << m.at(i) << " votes." <<endl;
+	}
+	cout << "---------" << endl;
 }
 
 // ------------
@@ -32,38 +44,40 @@ void recount_votes(Voting_Scenario &vs, int loser) {
 // ------------
 
 string voting_eval (Voting_Scenario &vs) {
-	string winner = "No Winner";
 	int i, tie, loser, num_c;
 	//cout << vs << endl;
 	num_c = vs.num_candidates();
-	vector<vector<Ballot>> tally(num_c);
-	vector<int> min_count(num_c, 0);
-	goto countvotes;
-cleaned:
-	tally.clear();
-	tally.resize(num_c);
-	min_count.clear();
-	min_count.resize(num_c);
+	vector<vector<Ballot> > tally;
+	vector<int> min_count;
 countvotes:
+	tally.resize(num_c);
+	min_count.resize(num_c);
+	//cout << "counting votes..." << endl;
 	for (vector<Ballot>::iterator it = vs.beginb(); it != vs.endb(); ++it) {
 			i = (*it).get_vote() - 1;
 			
 			tally.at(i).push_back(*it);
 			min_count.at(i)++;
 			if (tally.at(i).size() > vs.num_ballots()/2) 
-				return vs.get_candidate(i);
+				return vs.get_candidate(i) + "\n";
 	}
 	tie = 1;
 	//**if i get out here, I gotta discard the lowest amount of votes.
 	loser = 0;
 	// find the candidate with the lowest number of votes
+	//display_tally(min_count, num_c);
 	for (i = 1; i < num_c; i++) {
 		if (min_count.at(i) != min_count.at(loser)) {
 			tie = 0;
+			if (min_count.at(loser) == 0) {
 			
-			if (min_count.at(i) < min_count.at(loser)) loser = i;
+				//cout << "removing zero, changing " << loser << " to " << i << endl ;
+				loser = i;
+			}
+			else if (min_count.at(i) < min_count.at(loser) && min_count.at(i) != 0) loser = i;
 		}
 	}
+	//cout << "eliminating " << loser << " now..." << endl;
 	if (tie) {
 		string winners = "";
 		for (i = 0; i < num_c; i++) {
@@ -73,8 +87,12 @@ countvotes:
 	}
 	//if all candidates have same number of votes, return all names
 	recount_votes(vs, loser+1);
-	goto cleaned;
+	
+	tally.clear();
+	min_count.clear();
+	goto countvotes;
 }
+
 
 // -------------
 // voting_print
@@ -107,8 +125,8 @@ void retrieve (std::istream &r, Voting_Scenario &vs) {
 		}
 		vs.add_candidate(name);
 	}
-	int safety = 0;
-	while (safety++ < 10) {
+	//int safety = 0;
+	while (1) {
 		Ballot b;
 		for (i = 0; i < numCandidates; i++) {
 			r >> j;
@@ -119,7 +137,7 @@ void retrieve (std::istream &r, Voting_Scenario &vs) {
 		vs.add_ballot(b);
 		r.ignore(1, '\n');
 		//cout << r.peek() << endl;
-		if (r.peek() == '\n' || !r) {
+		if (r.peek() < '0' || r.peek() > '9') {
 			//cout << "done reading ballots" << endl;
 			break;
 		}

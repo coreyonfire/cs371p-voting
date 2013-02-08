@@ -49,3 +49,11 @@ clean:
 	rm -f RunVoting
 	rm -f TestVoting
 	rm -f *.tmp
+	
+generate: testGenerator.c++
+	g++ -pedantic -std=c++0x -Wall testGenerator.c++ -o generator
+	rm -f RunVoting.in
+	generator > RunVoting.in
+	
+rung: generate run
+	
