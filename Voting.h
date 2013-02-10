@@ -37,9 +37,27 @@ public:
 	int get_vote() {
 		return votes.front();
 	}
-	void bump_vote() {
+	void bump_vote(int i) {
+		//int j;
 		if (votes.size() == 1) return;
-		votes.erase(votes.begin());
+		for (vector<int>::iterator it = votes.begin(); it != votes.end(); ) {
+			//cout << *it << " : " << i <<  " " << votes.size() <<endl;
+			if (*it == i) {
+				//cout << "removing vote" << endl;
+				it = votes.erase(it);
+				//cout << (it == votes.end() ? "true" : "false") << endl;
+			}
+			else {
+				if (*it > i) {
+					//cout << "decrementing!" << endl;
+					--(*it);
+				}
+				++it;
+			}
+			
+		}
+		//cout << "done bumping ballot" << endl;
+		//votes.erase(votes.begin()+i-1);
 		return;
 	}
 	int num_votes() {
@@ -82,6 +100,10 @@ public:
 	
 	string get_candidate(int n) {
 		return candidates.at(n);
+	}
+	
+	void remove_candidate(int n) {
+		candidates.erase(candidates.begin()+n);
 	}
 	
 	void add_ballot(Ballot b) {

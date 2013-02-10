@@ -7,12 +7,12 @@
 
 
 //number of elections to generate
-#define num_tests 1000
+#define num_tests 1
 
 //if you want to use a set number of candidates with a set number of ballots,
 //use the below values. 
 #define num_candidates 4
-#define num_ballots 10
+#define num_ballots 700
 // 0 to random values, 1 to use above values
 #define set_num 0
 
@@ -45,7 +45,7 @@ string last_name[] = {
 	"Hedgehog", "Mite", "Jellyfish", "Boobs", "Frog", "Snail",
 	"Lark", "Pangolin", "Cat", "Squirrel", "Shrew", "Chimpanzee",
 	"Chipmunk", "Downing", "Reza", "Seagull", "Shark", "Terrier",
-	"Pikachu", "Wolf", "Unicorn", "Dragon", "Wyvern", "Dinosaur", //
+	"Pikachu", "Wolf", "Unicorn", "Dragon", "Wyvern", "Dinosaur", 
 	"Alien", "Whale", "Fish", "Monkey", "Bear", "Pegasus", 
 	"Elephant", "Tiger", "Hyena", "Toaster", "Spaghetti", "Poe",
 	"ReDead", "Armadillo", "Mockingbird", "Nightengale", "Dove",
