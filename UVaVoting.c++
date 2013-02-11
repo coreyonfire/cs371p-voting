@@ -236,7 +236,7 @@ countvotes:
 // -------------
 
 void voting_print (std::ostream& w, string v) {
-    w << v << std::endl;
+    w << v;
 }
 
 
@@ -258,7 +258,7 @@ bool valid_vote_check (Ballot &b, int j) {
 
 void retrieve (std::istream &r, Voting_Scenario &vs) {
 	int numCandidates, i, j;
-	char name[81];
+	char name[100];
 	r >> numCandidates;
 	if (numCandidates < 1)
 		exit(-1);
@@ -266,7 +266,7 @@ void retrieve (std::istream &r, Voting_Scenario &vs) {
 	//cout << numCandidates << endl;
 	for (i = 0; i < numCandidates; i++) {
 		try {
-			r.getline(name, 81, '\n');
+			r.getline(name, 100, '\n');
 			//cout << "Candidate: " << name << endl;
 		} catch (...) {
 			cout << "Number of candidates incorrect, skipping scenario" << endl;
@@ -280,8 +280,7 @@ void retrieve (std::istream &r, Voting_Scenario &vs) {
 		char line[41];
 		bool add = 1;
 		stringstream ss(stringstream::in | stringstream::out);
-		
-		
+
 		if (r.peek() < '0' || r.peek() > '9') {
 			//cout << r.peek()<< endl;
 			break;
@@ -291,17 +290,16 @@ void retrieve (std::istream &r, Voting_Scenario &vs) {
 		//cout << "ballot is: " << line << endl;
 		ss << line;
 		
-		
 		for (i = 0; i < numCandidates; i++) {
 			ss >> j;
-			if (valid_vote_check(b, j)) {
+			//if (valid_vote_check(b, j)) {
 				b.add_vote(j);
-			}	
-			else {
+			//}	
+			//else {
 				//add = 0;
 				//cout << "invalid ballot\n";
 				//break;
-			}
+			//}
 		}
 		//cout << endl;
 		if (add) vs.add_ballot(b);
@@ -334,8 +332,9 @@ void voting_solve (std::istream& r, std::ostream& w) {
 		//cout << numCases << endl;
 		Voting_Scenario vs;
 		retrieve(r, vs);
-        v = voting_eval(vs);
-        voting_print(w,  v);
+    v = voting_eval(vs);
+    voting_print(w,  v);
+		if (numCases) cout << endl;
 	}
 }
 

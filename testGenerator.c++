@@ -7,12 +7,12 @@
 
 
 //number of elections to generate
-#define num_tests 1
+#define num_tests 1000
 
 //if you want to use a set number of candidates with a set number of ballots,
 //use the below values. 
-#define num_candidates 4
-#define num_ballots 700
+#define num_candidates 10
+#define num_ballots 500
 // 0 to random values, 1 to use above values
 #define set_num 0
 
