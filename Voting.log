@@ -1,0 +1,83 @@
+commit 69530d64c51eb06b1588c79daf8a3a29baf57896
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Mon Feb 11 15:43:52 2013 -0600
+
+    Oh boy. The mother of all updates! I changed everything. It runs a little quicker, and conforms to the specifications listed on the site. Woo.
+
+commit 3ff5ab65c53d297a910916e147a53ebf0ebec2c8
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Sun Feb 10 19:25:10 2013 -0600
+
+    Yay! Done! Finishing up everything and turning it it now.
+
+commit 479aaf190a32404f3fa890a92f5ba8c16a10d0e5
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Sun Feb 10 15:08:13 2013 -0600
+
+    I dunno what's wrong. Wrongs answers on UVa though, looking into it.
+
+commit 5dbcc62f45b7eceda6abbca4b102ce51f49723d6
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Fri Feb 8 17:10:21 2013 -0600
+
+    Added a whole bunch of stuff. Wrote a test generator, updated make file, fixed ties, Resolved an issue where first candidate getting 0 votes broke my code.
+
+commit 050d3a79065b2983a42067c94a23321b733b46e9
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Thu Feb 7 17:45:42 2013 -0600
+
+    Everything works, afaik. Looking to do some more serious testing now; submitting to UVa.
+
+commit 316ddf6c62e59a653e23edf3f1f89d2201a3ccb4
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Thu Feb 7 17:39:39 2013 -0600
+
+    Modified .gitignore
+
+commit e23a3f510086e7f9a96fcb2f25694590b79d26e7
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Thu Feb 7 17:04:21 2013 -0600
+
+    Most things work now. Need to find a way to get the people who tied to print. Right now, it just prints 'tie!' which is kinda lame.
+
+commit 9d1918a1fa1fa1f26a7a07f53c31c79b489fc118
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Wed Feb 6 22:49:42 2013 -0600
+
+    Final commit for the night. Logging issues now.
+
+commit e8556969a42e61ba3beba91e1d0bfae38c27b5da
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Wed Feb 6 22:26:51 2013 -0600
+
+    Oh em gee, I changed a lot. Now can set up votes, read votes, parse votes, and return a winner if anyone gets more than 50% of the vote. Can't count ties though. Gotta fix that. Peace~
+
+commit ac72a4d17161c121852df1c8bd376f2db30563da
+Author: Corey Besmer <cs.utexas.edu>
+Date:   Wed Feb 6 19:21:50 2013 -0600
+
+    Added all your bs files. So many files. Why so many files. Good lord. Makes me want to punch myself in the kidney repeatedly. I don't even have this many files at work. Sheesh.
+    
+    /rant
+
+commit 5b6a4fb5f87dc8caac7aaa2497ec171da3def0c2
+Author: coreyonfire <coreyonfire@gmail.com>
+Date:   Wed Feb 6 16:28:08 2013 -0600
+
+    Removed voting_read.
+    
+    It was not needed! LOL!
+
+commit ac764585bab46ba1fbdaf75f368c1587151a743c
+Author: coreyonfire <coreyonfire@gmail.com>
+Date:   Wed Feb 6 14:25:56 2013 -0800
+
+    Initial Commit
+    
+    First commit, need to clean up. Still some collatz bits, but mostly voting-ready.
+
+commit 087eec0981cbb71c5aa262466d4009cb7de7e6d4
+Author: coreyonfire <coreyonfire@gmail.com>
+Date:   Wed Feb 6 14:24:35 2013 -0800
+
+    Initial commit

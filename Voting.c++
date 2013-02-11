@@ -20,10 +20,12 @@
 using namespace std;
 
 
+
+//return true if the specified number is not in the election any more
 bool is_eliminated(vector<int> not_eliminated, int i) {
+	assert(i >= 0);
 	for (vector<int>::iterator it = not_eliminated.begin();
 			it != not_eliminated.end(); ++it) {
-			//cout << i << " : " << *it << endl;
 			if (i == *it) return false;
 	}
 	return true;
@@ -34,7 +36,7 @@ bool is_eliminated(vector<int> not_eliminated, int i) {
 // ------------
 
 string voting_eval (Voting_Scenario &vs) {
-	//cout << "starting vote count now..." << endl;
+	assert(vs.num_candidates() != 0);
 	int i, tie, loser, num_c, glenndowning = 1;
 	string winners = "";
 	vector<vector<Ballot> > tally;
@@ -44,18 +46,16 @@ string voting_eval (Voting_Scenario &vs) {
 	
 	//check for special case of 0 ballots
 	if (vs.num_ballots() == 0) {
-		//cout << "No ballots!" << endl;
 		return vs.candidate_string();
 	}
 	
 	num_c = vs.num_candidates();
 	tally.resize(num_c);
-	//cout << "counting votes initially" << endl;
+	
+	//do initial tally of votes
 	for (vector<Ballot>::iterator it = vs.beginb(); it != vs.endb(); ++it) {
 		i = (*it).get_vote() - 1;
-		//cout << "voting for " << vs.get_candidate(i);
 		tally.at(i).push_back(*it);
-		//cout << ", " << tally.at(i).size() << " votes" << endl;
 		if (tally.at(i).size() == 1) {
 			not_eliminated.push_back(i);
 		}
@@ -69,12 +69,10 @@ string voting_eval (Voting_Scenario &vs) {
 		loser = tally.at(not_eliminated.front()).size();
 		
 		//FIND THE MINIMUM AND WHO ALL IS AT IT
-		//cout << "finding the minimum..." << endl;
 		for (vector<int>::iterator it = not_eliminated.begin();
 			it != not_eliminated.end(); ++it) {
 			i = tally.at(*it).size();
 			
-			//cout << i << " for " << vs.get_candidate(*it) << endl;
 			//if someone's got the majority, just give it to them
 			if ( (unsigned) i > vs.num_ballots()/2) 
 				return vs.get_candidate(*it) + "\n";
@@ -83,14 +81,12 @@ string voting_eval (Voting_Scenario &vs) {
 			else if (i <= loser) {
 				
 				if (i < loser ) {
-					//cout << "new minimum found" << endl;
 					tie = 0;
 					loser = i;
 					tied_for_last.clear();
 					tied_for_last.push_back(*it);
 				}
 				else if (i == loser) {
-					//cout << "found more losers" << endl;
 					tied_for_last.push_back(*it);
 				}
 			}
@@ -98,7 +94,6 @@ string voting_eval (Voting_Scenario &vs) {
 		}
 	
 		//ensure that if there's a tie, it's accounted for
-		//cout << "checking for tie..." << endl;
 		if (tie) {
 			for (int i = 0; i < num_c; i++) {
 				if (!is_eliminated(not_eliminated, i)) winners += vs.get_candidate(i) + "\n";
@@ -110,37 +105,25 @@ string voting_eval (Voting_Scenario &vs) {
 		//so bump them and push them where they go
 		//GO THROUGH THE LOSERS, REDISTRIBUTING THEIR VOTES
 		//AND ADD THEM TO ELIMINATED
-		
-		//cout << "redistributing votes..." << endl;
 		for (vector<int>::iterator it2 = tied_for_last.begin();
 			it2 != tied_for_last.end(); ++it2) {
 			//remove his votes
-			//cout << "removing " << vs.get_candidate(*it2) << endl;
 			for (vector<Ballot>::iterator it = tally.at(*it2).begin();
 			it != tally.at(*it2).end(); ++it) {
 			
-				//cout << "hi: " << (*it).get_vote() << endl;
 				do {
-					//cout << "bumping vote: " << (*it) << endl;
 					(*it).bump_vote();
 				} while (is_eliminated(not_eliminated, (*it).get_vote()-1));
-				//cout << "omg" << endl;
-				//cout << "adding vote for " << vs.get_candidate((*it).get_vote()-1) << ", ";
 				tally.at((*it).get_vote()-1).push_back((*it));
-				//cout << tally.at((*it).get_vote()-1).size() << endl;
 				if (tally.at((*it).get_vote()-1).size() == 1){
-					//cout << "bumped someone up: " << vs.get_candidate((*it).get_vote()-1) << endl;
 					not_eliminated.push_back((*it).get_vote()-1);
 				}
 			}
 			tally.at(*it2).clear();
 			//remove him
-			//cout << "eliminating him now" << endl;
 			for (vector<int>::iterator it = not_eliminated.begin();
 			it != not_eliminated.end(); ++it) {
-				//cout << "bye" << endl;
 				if (*it == *it2) {
-					//cout << "eliminating " << vs.get_candidate(*it) << endl;
 					not_eliminated.erase(it);
 					break;
 				}
@@ -148,7 +131,6 @@ string voting_eval (Voting_Scenario &vs) {
 		}
 		tied_for_last.clear();
 	} while (glenndowning);
-	//cout << "tie found, returning winners." << endl;
 	return winners;
 }
 
@@ -169,8 +151,7 @@ void retrieve (std::istream &r, Voting_Scenario &vs) {
 	int numCandidates, i, j;
 	char name[100];
 	r >> numCandidates;
-	if (numCandidates < 1)
-		exit(-1);
+	assert(numCandidates > 0);
 	r.ignore(1, '\n');
 	for (i = 0; i < numCandidates; i++) {
 		try {
@@ -213,16 +194,18 @@ void voting_solve (std::istream& r, std::ostream& w) {
 	int numCases;
 	string v;
 	r >> numCases;
+	assert(numCases > 0);
 	if (!r) {
 		numCases = -1;
 	}
 	r.ignore(1, '\n');
 	
-  while (numCases-- > 0) {
+	while (numCases-- > 0) {
 		Voting_Scenario vs;
 		retrieve(r, vs);
     v = voting_eval(vs);
     voting_print(w,  v);
 		if (numCases) w << endl;
 	}
+	assert (numCases < 0);
 }
