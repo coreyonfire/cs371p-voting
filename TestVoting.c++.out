@@ -1,3 +1,4 @@
+valgrind TestVoting
 TestVoting.c++
 .......................
 

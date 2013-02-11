@@ -37,27 +37,10 @@ public:
 	int get_vote() {
 		return votes.front();
 	}
-	void bump_vote(int i) {
+	void bump_vote() {
 		//int j;
-		if (votes.size() == 1) return;
-		for (vector<int>::iterator it = votes.begin(); it != votes.end(); ) {
-			//cout << *it << " : " << i <<  " " << votes.size() <<endl;
-			if (*it == i) {
-				//cout << "removing vote" << endl;
-				it = votes.erase(it);
-				//cout << (it == votes.end() ? "true" : "false") << endl;
-			}
-			else {
-				if (*it > i) {
-					//cout << "decrementing!" << endl;
-					--(*it);
-				}
-				++it;
-			}
-			
-		}
-		//cout << "done bumping ballot" << endl;
-		//votes.erase(votes.begin()+i-1);
+		
+		votes.erase(votes.begin());
 		return;
 	}
 	int num_votes() {
@@ -85,6 +68,12 @@ class Voting_Scenario {
 	vector<string> candidates;
 	vector<Ballot> ballots;
 public: 
+
+	string candidate_string() {
+		string s = "";
+		for (int i = 0; (unsigned)i < candidates.size(); i++) s += candidates.at(i) + "\n";
+		return s;
+	}
 	
 	void add_candidate(string name) {
 		candidates.push_back(name);
@@ -151,6 +140,7 @@ public:
 // ------------
 
 /**
+ * Takes in a voting scenario, returns the winners of that election
  * @param vs The voting scenario being counted
  * @return the name(s) of the winner(s)
  */
